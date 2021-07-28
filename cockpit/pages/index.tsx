@@ -1,25 +1,19 @@
-import { Suspense, lazy, useState, useEffect } from 'react';
-const Nav = lazy(() => import('auth/Nav'));
+import React from 'react';
+
+// import dynamic from 'next/dynamic';
+
+// const Nav = dynamic(() => import('auth/Nav'));
+
+const Nav = (await import('auth/Nav')).default;
+const add = (await import('auth/add')).default;
 
 export default function Cockpit() {
-  const [isFront, setIsFront] = useState(false);
-
-  useEffect(() => {
-    process.nextTick(() => {
-      if (globalThis.window ?? false) {
-        setIsFront(true);
-      }
-    });
-  }, []);
-
-  if (!isFront) return null;
-
+  console.log(add(2, 3));
   return (
     <div>
-      <Suspense fallback="nav">
-        <Nav />
-      </Suspense>
-      <h1>Cockpit</h1>
+      <Nav />
+
+      <h1>wekjbgeilwubgf</h1>
     </div>
   );
 }

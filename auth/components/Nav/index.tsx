@@ -7,7 +7,7 @@ const Nav = () => (
       background: '#584f4f',
     }}
   >
-    <h1>Ruan</h1>
+    <h1>AUTH</h1>
   </div>
 );
 

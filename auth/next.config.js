@@ -2,7 +2,6 @@ const {
   withModuleFederation,
   MergeRuntime,
 } = require('@module-federation/nextjs-mf');
-const path = require('path');
 
 module.exports = {
   webpack: (config, options) => {
@@ -14,6 +13,7 @@ module.exports = {
       remotes: {},
       exposes: {
         './Nav': './components/Nav',
+        './add': './utils/add',
       },
       shared: [],
     };
