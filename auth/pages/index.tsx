@@ -7,8 +7,6 @@ export default function Auth() {
   singIn({ email: 'aragao.ruan@gmail.com', password: '123123' });
 
   return (
-    <div>
-      <h1>Auth</h1>
-    </div>
+    <h1>Hello world</h1>
   );
 }
