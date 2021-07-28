@@ -1,43 +1,32 @@
-const { withFederatedSidecar } = require('@module-federation/nextjs-mf');
+const {
+  withModuleFederation,
+  MergeRuntime,
+} = require('@module-federation/nextjs-mf');
+const path = require('path');
 
-module.exports = withFederatedSidecar({
-  name: 'auth',
-  filename: 'static/chunks/remoteEntry.js',
-  exposes: {},
-  shared: {
-    react: {
-      // Notice shared are NOT eager here.
-      requiredVersion: false,
-      singleton: true,
-    },
-  },
-})({
-  webpack5: true,
-  webpack(config, options) {
-    const { webpack } = options;
-    config.experiments = { topLevelAwait: true };
-    config.output.publicPath = 'auto';
-    config.module.rules.push({
-      test: /_app.js/,
-      loader: '@module-federation/nextjs-mf/lib/federation-loader.js',
-    });
-    config.plugins.push(
-      new webpack.container.ModuleFederationPlugin({
-        remoteType: 'var',
-        remotes: {
-          next2: 'cockpit',
-        },
-        shared: {
-          react: {
-            // Notice shared ARE eager here.
-            eager: true,
-            singleton: true,
-            requiredVersion: false,
-          },
-        },
-      })
-    );
+module.exports = {
+  webpack: (config, options) => {
+    const { buildId, dev, isServer, defaultLoaders, webpack } = options;
+    const mfConf = {
+      name: 'auth',
+      library: { type: config.output.libraryTarget, name: 'auth' },
+      filename: 'static/runtime/remoteEntry.js',
+      remotes: {},
+      exposes: {
+        './Nav': './components/Nav',
+      },
+      shared: [],
+    };
+
+    // Configures ModuleFederation and other Webpack properties
+    withModuleFederation(config, options, mfConf);
+
+    config.plugins.push(new MergeRuntime());
+
+    if (!isServer) {
+      config.output.publicPath = 'http://localhost:3001/_next/';
+    }
 
     return config;
   },
-});
+};

@@ -1,43 +1,38 @@
-const { withFederatedSidecar } = require('@module-federation/nextjs-mf');
+const {
+  withModuleFederation,
+  MergeRuntime,
+} = require('@module-federation/nextjs-mf');
+const path = require('path');
 
-module.exports = withFederatedSidecar({
-  name: 'cockpit',
-  filename: 'static/chunks/remoteEntry.js',
-  exposes: {},
-  shared: {
-    react: {
-      // Notice shared are NOT eager here.
-      requiredVersion: false,
-      singleton: true,
-    },
-  },
-})({
-  webpack5: true,
-  webpack(config, options) {
-    const { webpack } = options;
-    config.experiments = { topLevelAwait: true };
-    config.output.publicPath = 'auto';
-    config.module.rules.push({
-      test: /_app.js/,
-      loader: '@module-federation/nextjs-mf/lib/federation-loader.js',
-    });
-    config.plugins.push(
-      new webpack.container.ModuleFederationPlugin({
-        remoteType: 'var',
-        remotes: {
-          next2: 'auth',
-        },
-        shared: {
-          react: {
-            // Notice shared ARE eager here.
-            eager: true,
-            singleton: true,
-            requiredVersion: false,
-          },
-        },
-      })
-    );
+module.exports = {
+  webpack: (config, options) => {
+    const { buildId, dev, isServer, defaultLoaders, webpack } = options;
+    const mfConf = {
+      name: 'home',
+      library: { type: config.output.libraryTarget, name: 'home' },
+      filename: 'static/runtime/remoteEntry.js',
+      remotes: {
+        // For SSR, resolve to disk path (or you can use code streaming if you have access)
+        auth: isServer
+          ? path.resolve(
+              __dirname,
+              '../auth/.next/server/static/runtime/remoteEntry.js'
+            )
+          : 'auth', // for client, treat it as a global
+      },
+      exposes: {},
+      shared: [],
+    };
+
+    // Configures ModuleFederation and other Webpack properties
+    withModuleFederation(config, options, mfConf);
+
+    config.plugins.push(new MergeRuntime());
+
+    if (!isServer) {
+      config.output.publicPath = 'http://localhost:3000/_next/';
+    }
 
     return config;
   },
-});
+};
