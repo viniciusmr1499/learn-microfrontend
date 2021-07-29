@@ -14,6 +14,12 @@ import {
   DropdownMenu,
   DropdownItem,
   NavbarText,
+  Card, 
+  Button, 
+  CardTitle,
+  CardText,
+  Row,
+  Col
 } from 'reactstrap';
 
 const getToken = (await import('auth/GetToken')).default;
@@ -45,8 +51,8 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <div className="container-fluid m-0 p-0">
-        <Navbar color="secondary navbar-dark p-4" light expand="md">
+      <div className="container-fluid m-0 p-0 mb-4" style={{ boxShadow: '1px 0px 15px rgba(0,0,0,.2)' }}>
+        <Navbar color="light navbar-light p-4" light expand="md">
           <NavbarBrand href="#">Midway</NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
@@ -59,11 +65,11 @@ const Dashboard: React.FC = () => {
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Options
+                  Opções
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>Option 1</DropdownItem>
-                  <DropdownItem>Option 2</DropdownItem>
+                  <DropdownItem>Opção 1</DropdownItem>
+                  <DropdownItem>Opção 2</DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
@@ -84,8 +90,15 @@ const Dashboard: React.FC = () => {
           <div>Loading</div>
         ) : (
           <>
-            <p>Nome: {user?.name}</p>
-            <p>E-mail: {user?.email}</p>
+            <Row className="container mt-5">
+              <Col sm="4">
+                <Card body>
+                  <CardTitle tag="h4">Informações do usuário</CardTitle>
+                  <CardText>Nome: {user?.name}</CardText>
+                  <CardText>E-mail: {user?.email}</CardText>
+                </Card>
+              </Col>
+            </Row>
           </>
         )}
       </div>
