@@ -31,6 +31,7 @@ const Login: React.FC = () => {
             name="email"
             id="email"
             placeholder="Email"
+            required
           />
         </div>
 
@@ -41,6 +42,7 @@ const Login: React.FC = () => {
             name="password"
             id="passwordl"
             placeholder="password"
+            required
           />
         </div>
 
