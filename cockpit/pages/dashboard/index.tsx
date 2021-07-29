@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import {
   Collapse,
@@ -16,6 +17,7 @@ import {
 } from 'reactstrap';
 
 const getToken = (await import('auth/GetToken')).default;
+const logOut = (await import('auth/LogOut')).default;
 
 const Dashboard: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,6 +36,12 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const toggle = () => setIsOpen(!isOpen);
+
+  const handleLogout = async () => {
+    await logOut();
+
+    Router.push('/login');
+  };
 
   return (
     <>
@@ -60,9 +68,12 @@ const Dashboard: React.FC = () => {
               </UncontrolledDropdown>
             </Nav>
             <NavbarText style={{ marginLeft: 'auto' }}>
-              <a href="#" style={{ textDecoration: 'none' }}>
+              <div
+                onClick={handleLogout}
+                style={{ textDecoration: 'none', cursor: 'pointer' }}
+              >
                 Sair
-              </a>
+              </div>
             </NavbarText>
           </Collapse>
         </Navbar>

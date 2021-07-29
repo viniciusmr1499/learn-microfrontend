@@ -15,3 +15,6 @@ declare module 'auth/GetToken' {
     cxt?: any
   ): Promise<ReturnSingIn | undefined>;
 }
+declare module 'auth/LogOut' {
+  export default function logOut(cxt?: any): Promise<void>;
+}

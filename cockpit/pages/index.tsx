@@ -5,11 +5,11 @@ export default function Cockpit() {
   return <div />;
 }
 
-// export const getServerSideProps: GetServerSideProps = async (ctx) => {
-//   return {
-//     redirect: {
-//       destination: '/login',
-//       permanent: false,
-//     },
-//   };
-// };
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  return {
+    redirect: {
+      destination: '/login',
+      permanent: false,
+    },
+  };
+};
