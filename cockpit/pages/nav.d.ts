@@ -5,3 +5,6 @@ declare module 'auth/Nav' {
 
   export default Nav;
 }
+declare module 'auth/add' {
+  export default function add(x: number, y: number): number;
+}

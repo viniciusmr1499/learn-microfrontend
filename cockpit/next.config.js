@@ -8,8 +8,8 @@ module.exports = {
   webpack: (config, options) => {
     const { buildId, dev, isServer, defaultLoaders, webpack } = options;
     const mfConf = {
-      name: 'home',
-      library: { type: config.output.libraryTarget, name: 'home' },
+      name: 'cockpit',
+      library: { type: config.output.libraryTarget, name: 'cockpit' },
       filename: 'static/runtime/remoteEntry.js',
       remotes: {
         // For SSR, resolve to disk path (or you can use code streaming if you have access)

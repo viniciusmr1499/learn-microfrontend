@@ -2,7 +2,6 @@ const {
   withModuleFederation,
   MergeRuntime,
 } = require('@module-federation/nextjs-mf');
-const path = require('path');
 
 module.exports = {
   webpack: (config, options) => {
@@ -13,7 +12,8 @@ module.exports = {
       filename: 'static/runtime/remoteEntry.js',
       remotes: {},
       exposes: {
-        './Nav': './components/Nav',
+        './SingIn': './keycloak/singIn',
+        './GetToken': './keycloak/getToken',
       },
       shared: [],
     };
