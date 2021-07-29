@@ -15,11 +15,13 @@ async function getToken(cxt?: any): Promise<ReturnGetToken | undefined> {
   const { '@AUTH/token': token } = parseCookies(cxt);
 
   if (token) {
-    const { token, user } = await recoverUserInformation();
-    return {
-      token,
-      user,
-    };
+    const userInformation = await recoverUserInformation({ cxt, token });
+    if (userInformation) {
+      return {
+        token,
+        user: userInformation.user,
+      };
+    }
   }
 
   return undefined;

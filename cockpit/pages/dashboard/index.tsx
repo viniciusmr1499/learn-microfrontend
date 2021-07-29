@@ -11,12 +11,14 @@ type User = {
 
 const Dashboard: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function get() {
       const token = await getToken();
       if (token) {
         setUser(token.user);
+        setLoading(false);
       }
     }
     get();
@@ -25,8 +27,14 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <p>Nome: {user?.name}</p>
-      <p>Email: {user?.email}</p>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <p>Nome: {user?.name}</p>
+          <p>Email: {user?.email}</p>
+        </>
+      )}
     </div>
   );
 };
@@ -35,6 +43,7 @@ export default Dashboard;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const token = await getToken(ctx);
+
   if (!token) {
     return {
       redirect: {

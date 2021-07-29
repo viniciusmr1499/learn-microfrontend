@@ -26,6 +26,10 @@ async function singIn({ email, password }: SingInData): Promise<ReturnSingIn> {
     maxAge: 60 * 60 * 1, // 1 hour
   });
 
+  setCookie(undefined, '@AUTH/user', JSON.stringify(user), {
+    maxAge: 60 * 60 * 1, // 1 hour
+  });
+
   return {
     token,
     user,

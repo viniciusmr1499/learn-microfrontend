@@ -12,8 +12,8 @@ module.exports = {
       filename: 'static/runtime/remoteEntry.js',
       remotes: {},
       exposes: {
-        './SingIn': './utils/singIn',
-        './GetToken': './utils/getToken',
+        './SingIn': './keycloak/singIn',
+        './GetToken': './keycloak/getToken',
       },
       shared: [],
     };
