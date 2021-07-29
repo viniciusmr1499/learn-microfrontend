@@ -1,0 +1,14 @@
+{
+  "name": "microfrontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/viniciusmr1499/learn-microfrontend.git",
+  "author": "Ruan Aragao <aragao.ruan@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"cd auth; npm run dev\" \"cd cockpit; npm run dev\""
+  },
+  "dependencies": {
+    "concurrently": "^6.2.0"
+  }
+}
