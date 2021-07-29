@@ -14,6 +14,7 @@ module.exports = {
       exposes: {
         './SingIn': './keycloak/singIn',
         './GetToken': './keycloak/getToken',
+        './LogOut': './keycloak/logOut',
       },
       shared: [],
     };
