@@ -9,6 +9,8 @@
     "dev": "concurrently \"cd auth; npm run dev\" \"cd cockpit; npm run dev\""
   },
   "dependencies": {
-    "concurrently": "^6.2.0"
+    "bootstrap": "^5.0.2",
+    "concurrently": "^6.2.0",
+    "reactstrap": "^8.9.0"
   }
 }
